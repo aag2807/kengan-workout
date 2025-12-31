@@ -3,7 +3,7 @@ import type { Workout } from '../types/workout';
 import { StorageManager } from '../utils/storage';
 
 const STORAGE_KEY = 'custom-workouts';
-const storage = new StorageManager<Workout>(STORAGE_KEY);
+const storage = new StorageManager();
 
 export function useCustomWorkouts() {
   const [customWorkouts, setCustomWorkouts] = useState<Workout[]>([]);
@@ -16,8 +16,8 @@ export function useCustomWorkouts() {
 
   const loadWorkouts = async () => {
     try {
-      await storage.initDB();
-      const workouts = await storage.getAllItems();
+      await storage.init();
+      const workouts = await storage.getAllItems<Workout>(STORAGE_KEY);
       setCustomWorkouts(workouts.sort((a, b) => 
         new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime()
       ));
@@ -30,14 +30,14 @@ export function useCustomWorkouts() {
 
   const saveWorkout = async (workout: Workout): Promise<boolean> => {
     try {
-      await storage.initDB();
+      await storage.init();
       const workoutToSave = {
         ...workout,
         isCustom: true,
         createdAt: workout.createdAt || new Date().toISOString(),
       };
       
-      await storage.saveItem(workoutToSave);
+      await storage.saveItem(STORAGE_KEY, workoutToSave);
       await loadWorkouts();
       return true;
     } catch (error) {
@@ -48,12 +48,12 @@ export function useCustomWorkouts() {
 
   const updateWorkout = async (id: string, updates: Partial<Workout>): Promise<boolean> => {
     try {
-      await storage.initDB();
+      await storage.init();
       const existing = customWorkouts.find(w => w.id === id);
       if (!existing) return false;
 
       const updated = { ...existing, ...updates };
-      await storage.saveItem(updated);
+      await storage.saveItem(STORAGE_KEY, updated);
       await loadWorkouts();
       return true;
     } catch (error) {
@@ -64,8 +64,8 @@ export function useCustomWorkouts() {
 
   const deleteWorkout = async (id: string): Promise<boolean> => {
     try {
-      await storage.initDB();
-      await storage.deleteItem(id);
+      await storage.init();
+      await storage.deleteItem(STORAGE_KEY, id);
       await loadWorkouts();
       return true;
     } catch (error) {
@@ -96,8 +96,8 @@ export function useCustomWorkouts() {
 
   const clearAllWorkouts = async (): Promise<boolean> => {
     try {
-      await storage.initDB();
-      await storage.clearStore();
+      await storage.init();
+      await storage.clearStore(STORAGE_KEY);
       setCustomWorkouts([]);
       return true;
     } catch (error) {

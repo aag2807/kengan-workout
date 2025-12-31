@@ -278,7 +278,7 @@ export default function WorkoutSession({ workout, sessions, onComplete, onCancel
             <div className="mt-4 p-3 bg-arena-darker rounded-lg border border-arena-cage">
               <div className="text-arena-chalk text-xs font-bold mb-2">LAST 3 SESSIONS</div>
               <div className="space-y-1">
-                {overloadInfo.lastThreeSessions.slice(-3).reverse().map((session, idx) => (
+                {overloadInfo.lastThreeSessions.slice(-3).reverse().map((session) => (
                   <div key={session.sessionId} className="flex justify-between text-xs">
                     <span className="text-arena-chalk">
                       {new Date(session.date).toLocaleDateString()}

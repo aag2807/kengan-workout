@@ -31,7 +31,7 @@ export default function RoundTimer({
   const [totalElapsed, setTotalElapsed] = useState(0);
   
   const audioContextRef = useRef<AudioContext | null>(null);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const intervalRef = useRef<number | null>(null);
 
   // Initialize Web Audio API
   useEffect(() => {

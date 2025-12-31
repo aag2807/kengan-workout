@@ -53,7 +53,6 @@ export function calculatePersonalRecords(sessions: WorkoutSession[]): Map<string
           });
         } else {
           // Update existing record
-          let updated = false;
 
           // Check for max weight PR
           if (set.weight > currentRecord.maxWeight) {
@@ -61,7 +60,6 @@ export function calculatePersonalRecords(sessions: WorkoutSession[]): Map<string
             currentRecord.maxWeightReps = set.reps;
             currentRecord.maxWeightDate = session.date;
             currentRecord.maxWeightSessionId = session.id;
-            updated = true;
           }
 
           // Check for max reps PR (at same or higher weight)
@@ -73,7 +71,6 @@ export function calculatePersonalRecords(sessions: WorkoutSession[]): Map<string
             currentRecord.maxRepsWeight = set.weight;
             currentRecord.maxRepsDate = session.date;
             currentRecord.maxRepsSessionId = session.id;
-            updated = true;
           }
 
           currentRecord.totalSets++;

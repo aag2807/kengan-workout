@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { Button } from './ui/button';
-import { calculatePersonalRecords, formatPRDate, type PersonalRecord } from '../utils/personalRecords';
+import { calculatePersonalRecords, formatPRDate } from '../utils/personalRecords';
 import type { WorkoutSession } from '../types/workout';
 
 interface PersonalRecordsProps {

@@ -88,7 +88,6 @@ export function sendNotification(title: string, options?: NotificationOptions) {
   const defaultOptions: NotificationOptions = {
     icon: '/vite.svg',
     badge: '/vite.svg',
-    vibrate: [200, 100, 200],
     ...options,
   };
 

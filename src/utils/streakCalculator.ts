@@ -59,7 +59,6 @@ export function calculateStreak(sessions: WorkoutSession[]): StreakData {
   // Calculate current streak
   const today = new Date();
   today.setHours(0, 0, 0, 0);
-  const todayStr = today.toISOString().split('T')[0];
 
   let currentStreak = 0;
   let checkDate = new Date(today);
